@@ -13,8 +13,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Javi Sanromán"]
   spec.email         = ["javisanroman@gmail.com"]
 
-  spec.summary       = %q{Ruby gem to generated links automatically based in a text, keywords and urls given}
-  spec.description   = %q{Ruby gem to generated links automatically based in a text, keywords and urls given}
+  spec.summary       = %q{A ruby gem to generate links automatically based on a text, keywords and urls is given}
+  spec.description   = %q{A ruby gem to generate links automatically based on a text, keywords and urls is given. Useful for example to increase dinamically the internal links in your site and improve SEO metrics.}
   spec.homepage      = 'https://github.com/jsanroman/builder_links'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
@@ -24,6 +24,6 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'bundler', '~> 1.9'
   spec.add_development_dependency 'rake', '~> 10.0'
-  spec.add_development_dependency 'activerecord'#, '~> 10.0'
-  spec.add_development_dependency 'nokogiri'#, '~> 10.0'
+  spec.add_development_dependency 'activerecord'
+  spec.add_development_dependency 'nokogiri'
 end

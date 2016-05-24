@@ -1,12 +1,11 @@
 # BuilderLinks
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/builder_links`. To experiment with that code, run `bin/console` for an interactive prompt.
+A ruby gem to generate links automatically based on a text, keywords and urls is given. Useful for example to increase dinamically the internal links in your site and improve SEO metrics.
 
-TODO: Delete this and the text above, and describe your gem
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this line to your Gemfile's application:
 
 ```ruby
 gem 'builder_links'
@@ -20,19 +19,51 @@ Or install it yourself as:
 
     $ gem install builder_links
 
+## Configuration
+Use an initializer builder_links.rb
+
+```ruby
+# all parameters based on which allow to find keywords and build the links
+# builder_links will use anchortext to find text and uri to generate the link
+BuilderLinks.setup do |config|
+  config.patterns = [
+    {anchortext: 'google',  uri: 'http://www.google.com'},
+    {anchortext: 'builder links',  uri: 'https://github.com/jsanroman/builder_links'},
+    {anchortext: "I wanted to illuminate the whole earth", uri: 'https://es.wikipedia.org/wiki/Nikola_Tesla'},
+  ]
+
+  # maximum links generated to each call
+  config.total_links = 5
+  # maximum links generated to each pattern given
+  config.links_per_pattern = 1
+end
+```
+
 ## Usage
+Call directly to `BuilderLinks.text("")`
+```ruby
+BuilderLinks.text("<p>I wanted to illuminate the whole earth. There is enough electricity to become a second sun.</p>")
+```
+```ruby
+#<p><a href="https://es.wikipedia.org/wiki/Nikola_Tesla">I wanted to illuminate the whole earth</a>. There is enough electricity to become a second sun.</p>
+```
 
-TODO: Write usage instructions here
+Or you can add `builder_links` to your activerecord model, that will generate a method `builder_links(:field)`
+```ruby
+class Card < ActiveRecord::Base
+  attr_accessible :text, :user_text
 
-## Development
+  builder_links
+end
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release` to create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+# Then you can use builder_links method
+Card.find(1).builder_links(:text)
+Card.find(1).builder_links(:user_text)
+```
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/builder_links/fork )
+1. Fork it ( https://github.com/jsanroman/builder_links/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
