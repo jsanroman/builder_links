@@ -10,12 +10,12 @@ module BuilderLinks
 
       total_links = 0
       BuilderLinks.patterns.each do |pattern|
-        keyword_links = 0
+        links_per_pattern = 0
         @doc.search('p').children.each do |child|
-          break if max_links_generated?(total_links, keyword_links)
+          break if max_links_generated?(total_links, links_per_pattern)
 
           if analize_node(child, pattern)
-            keyword_links += 1
+            links_per_pattern += 1
             total_links += 1
           end
         end
@@ -30,9 +30,9 @@ module BuilderLinks
       if %('text', 'strong').include?(node.name) && node.children.count < 2
         replace_text = node.content
 
-        prefix_suffix = pattern[:keyword].include?(' ') ? '' : ' '
-        result = replace_text.sub!(/(#{prefix_suffix}#{pattern[:keyword]}#{prefix_suffix})/i,
-                                   '<a href="' + pattern[:link] + '" title="\1">\1</a>')
+        prefix_suffix = pattern[:anchortext].include?(' ') ? '' : ' '
+        result = replace_text.sub!(/(#{prefix_suffix}#{pattern[:anchortext]}#{prefix_suffix})/i,
+                                   '<a href="' + pattern[:uri] + '" title="\1">\1</a>')
 
         unless result.nil?
           if node.name == 'text'
@@ -50,8 +50,8 @@ module BuilderLinks
       false
     end
 
-    def max_links_generated?(total_links, keyword_links)
-      if !BuilderLinks.keyword_links.nil? && keyword_links >= BuilderLinks.keyword_links
+    def max_links_generated?(total_links, links_per_pattern)
+      if !BuilderLinks.links_per_pattern.nil? && links_per_pattern >= BuilderLinks.links_per_pattern
         return true
       end
       if !BuilderLinks.total_links.nil? && total_links >= BuilderLinks.total_links

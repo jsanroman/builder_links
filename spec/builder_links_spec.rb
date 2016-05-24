@@ -9,11 +9,11 @@ describe BuilderLinks do
     }
 
     BuilderLinks.patterns = [
-      {keyword: "I wanted to illuminate the whole earth", link: 'http://www.freedomtek.org/en/texts/nikola_tesla_interview_1899.php'},
-      {keyword: "electricity", link: 'https://en.wikipedia.org/wiki/Electricity'}
+      {anchortext: "I wanted to illuminate the whole earth", uri: 'https://es.wikipedia.org/wiki/Nikola_Tesla'},
+      {anchortext: "electricity", uri: 'https://en.wikipedia.org/wiki/Electricity'}
     ]
     BuilderLinks.total_links = 10
-    BuilderLinks.keyword_links = 5
+    BuilderLinks.links_per_pattern = 5
   end
 
   it 'has a version number' do
@@ -35,26 +35,26 @@ describe BuilderLinks do
   end
 
   it 'reestriction "keyword links" is success' do
-    BuilderLinks.keyword_links = 2
+    BuilderLinks.links_per_pattern = 2
     text = BuilderLinks::Analize.new(@text).run
 
     expect(Nokogiri::HTML(text).css('a').size).to eq(3)
 
-    BuilderLinks.keyword_links = 1
+    BuilderLinks.links_per_pattern = 1
     text = BuilderLinks::Analize.new(@text).run
 
     expect(Nokogiri::HTML(text).css('a').size).to eq(2)
   end
 
   it 'replace text in strong tag is success' do
-    BuilderLinks.patterns = [{keyword: 'Colorado Springs', link: 'https://es.wikipedia.org/wiki/Colorado_Springs_(Colorado)'}]
+    BuilderLinks.patterns = [{anchortext: 'Colorado Springs', uri: 'https://es.wikipedia.org/wiki/Colorado_Springs_(Colorado)'}]
 
     text = BuilderLinks::Analize.new(@text).run
     expect(Nokogiri::HTML(text).css('a').size).to eq(1)
   end
 
   it 'no replace text between tags' do
-    BuilderLinks.patterns = [{keyword: 'In Colorado Springs', link: 'https://es.wikipedia.org/wiki/Colorado_Springs_(Colorado)'}]
+    BuilderLinks.patterns = [{anchortext: 'In Colorado Springs', uri: 'https://es.wikipedia.org/wiki/Colorado_Springs_(Colorado)'}]
 
     text = BuilderLinks::Analize.new(@text).run
     expect(Nokogiri::HTML(text).css('a').size).to eq(0)

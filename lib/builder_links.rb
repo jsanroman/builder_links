@@ -7,11 +7,11 @@ module BuilderLinks
   extend Config
 
   define_setting :patterns
-  define_setting :keyword_links
+  define_setting :links_per_pattern
   define_setting :total_links
   @patterns = []
   @patterns.reverse!
-  @keyword_links = nil
+  @links_per_pattern = nil
   @total_links = nil
 
   def self.setup(&block)
