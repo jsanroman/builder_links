@@ -5,4 +5,6 @@ gemspec
 
 group :development, :test do
   gem "rspec"
+  gem "activerecord"
+  gem "nokogiri"
 end
