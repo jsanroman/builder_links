@@ -1,3 +1,5 @@
+require 'nokogiri'
+
 module BuilderLinks
   class Analize
     def initialize(text)
