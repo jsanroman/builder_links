@@ -7,4 +7,5 @@ group :development, :test do
   gem "rspec"
   gem "activerecord"
   gem "nokogiri"
+  gem 'coveralls'
 end
