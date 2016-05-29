@@ -1,4 +1,9 @@
-# BuilderLinks [![Build Status](https://travis-ci.org/jsanroman/builder_links.svg)](https://travis-ci.org/jsanroman/builder_links) [![Coverage Status](https://coveralls.io/repos/github/jsanroman/builder_links/badge.svg?branch=master)](https://coveralls.io/github/jsanroman/builder_links?branch=master)
+# BuilderLinks 
+
+[![Gem Version](https://badge.fury.io/rb/builder_links.svg)](https://badge.fury.io/rb/builder_links)
+[![Build Status](https://travis-ci.org/jsanroman/builder_links.svg)](https://travis-ci.org/jsanroman/builder_links) 
+[![Test Coverage](https://codeclimate.com/github/jsanroman/builder_links/badges/coverage.svg)](https://codeclimate.com/github/jsanroman/builder_links/coverage)
+[![Code Climate](https://codeclimate.com/github/jsanroman/builder_links/badges/gpa.svg)](https://codeclimate.com/github/jsanroman/builder_links)
 
 
 A ruby gem to generate links automatically based on a text, keywords and urls is given. Useful for example to increase dinamically the internal links in your site and improve SEO metrics.
