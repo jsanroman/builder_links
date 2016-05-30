@@ -5,25 +5,29 @@ module BuilderLinks
     def initialize(text)
       @doc = Nokogiri::HTML(text)
       @analized_text = nil
+      @total_links = 0
     end
 
     def run
       return @analized_text unless @analized_text.blank?
 
-      total_links = 0
       BuilderLinks.patterns.each do |pattern|
         links_per_pattern = 0
         @doc.search('p').children.each do |child|
-          break if max_links_generated?(total_links, links_per_pattern)
+          break if max_links_generated?(links_per_pattern)
 
           if analize_node(child, pattern)
             links_per_pattern += 1
-            total_links += 1
+            @total_links += 1
           end
         end
       end
 
       @analized_text = @doc.at('body').nil? ? '' : @doc.at('body').inner_html
+    end
+
+    def total_links
+      @total_links
     end
 
     private
@@ -52,11 +56,11 @@ module BuilderLinks
       false
     end
 
-    def max_links_generated?(total_links, links_per_pattern)
+    def max_links_generated?(links_per_pattern)
       if !BuilderLinks.links_per_pattern.nil? && links_per_pattern >= BuilderLinks.links_per_pattern
         return true
       end
-      if !BuilderLinks.total_links.nil? && total_links >= BuilderLinks.total_links
+      if !BuilderLinks.total_links.nil? && @total_links >= BuilderLinks.total_links
         return true
       end
 
