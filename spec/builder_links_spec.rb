@@ -59,4 +59,13 @@ describe BuilderLinks do
     text = BuilderLinks::Analize.new(@text).run
     expect(Nokogiri::HTML(text).css('a').size).to eq(0)
   end
+
+  it 'no generate link to black uris is success' do
+    BuilderLinks.total_links = 1
+    text = BuilderLinks::Analize.new(@text, {
+      black_uris: ['https://es.wikipedia.org/wiki/Nikola_Tesla', 'https://en.wikipedia.org/wiki/Electricity']
+      }).run
+
+    expect(Nokogiri::HTML(text).css('a').size).to eq(0)
+  end
 end

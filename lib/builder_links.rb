@@ -18,8 +18,8 @@ module BuilderLinks
     yield self
   end
 
-  def self.text(text)
-    analize = BuilderLinks::Analize.new(text)
+  def self.text(text, opts = {})
+    analize = BuilderLinks::Analize.new(text, opts)
     analize.run
   end
 

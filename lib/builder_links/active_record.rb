@@ -6,13 +6,13 @@ module BuilderLinks
 
     module ClassMethods
       def builder_links
-        define_method 'builder_links' do |arg|
-          return false if arg.blank?
-          return false unless attributes.include?(arg.to_s)
+        define_method 'builder_links' do |attr, opts={}|
+          return false if attr.blank?
+          return false unless attributes.include?(attr.to_s)
 
-          analize = BuilderLinks::Analize.new(attributes[arg.to_s])
+          analize = BuilderLinks::Analize.new(attributes[attr.to_s], opts)
           analize.run
-        end  
+        end
       end
     end
   end

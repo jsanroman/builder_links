@@ -2,7 +2,8 @@ require 'nokogiri'
 
 module BuilderLinks
   class Analize
-    def initialize(text)
+    def initialize(text, opts = {})
+      @options = {black_uris: []}.merge(opts)
       @doc = Nokogiri::HTML(text)
       @analized_text = nil
       @total_links = 0
@@ -12,6 +13,8 @@ module BuilderLinks
       return @analized_text unless @analized_text.blank?
 
       BuilderLinks.patterns.each do |pattern|
+        next if black_pattern?(pattern)
+
         links_per_pattern = 0
         @doc.search('p').children.each do |child|
           break if max_links_generated?(links_per_pattern)
@@ -31,7 +34,6 @@ module BuilderLinks
     end
 
     private
-
     def analize_node(node, pattern)
       if %('text', 'strong').include?(node.name) && node.children.count < 2
         replace_text = node.content
@@ -65,6 +67,14 @@ module BuilderLinks
       end
 
       false
+    end
+
+    def black_pattern?(pattern)
+      @options[:black_uris].each do |black_uri|
+        return true if black_uri.include?(pattern[:uri])
+      end
+
+      return false
     end
   end
 end
