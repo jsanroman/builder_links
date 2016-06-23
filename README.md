@@ -46,7 +46,9 @@ end
 ```
 
 ## Usage
-Call directly to `BuilderLinks.text("")`
+Call directly to `BuilderLinks.text("", {black_uris: ['google.com']})`
+
+We can add multiple uri's for the `black_uris` option to not generate these links
 ```ruby
 BuilderLinks.text("<p>I wanted to illuminate the whole earth. There is enough electricity to become a second sun.</p>")
 ```
@@ -63,7 +65,7 @@ class Card < ActiveRecord::Base
 end
 
 # Then you can use builder_links method
-Card.find(1).builder_links(:text)
+Card.find(1).builder_links(:text, {black_uris: ['google.com']})
 Card.find(1).builder_links(:user_text)
 ```
 
