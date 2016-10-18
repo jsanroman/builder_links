@@ -14,6 +14,8 @@ module BuilderLinks
 
       BuilderLinks.patterns.each do |pattern|
         next if black_pattern?(pattern)
+        break if max_links_generated?
+        break if !@doc.content.include?(pattern[:anchortext])
 
         links_per_pattern = 0
         @doc.search('p').children.each do |child|
@@ -58,8 +60,8 @@ module BuilderLinks
       false
     end
 
-    def max_links_generated?(links_per_pattern)
-      if !BuilderLinks.links_per_pattern.nil? && links_per_pattern >= BuilderLinks.links_per_pattern
+    def max_links_generated?(links_per_pattern=nil)
+      if !links_per_pattern.nil? && !BuilderLinks.links_per_pattern.nil? && links_per_pattern >= BuilderLinks.links_per_pattern
         return true
       end
       if !BuilderLinks.total_links.nil? && @total_links >= BuilderLinks.total_links
