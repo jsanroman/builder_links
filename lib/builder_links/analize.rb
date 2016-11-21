@@ -13,9 +13,9 @@ module BuilderLinks
       return @analized_text unless @analized_text.blank?
 
       BuilderLinks.patterns.each do |pattern|
-        next if black_pattern?(pattern)
         break if max_links_generated?
-        break if !@doc.content.include?(pattern[:anchortext])
+        next if black_pattern?(pattern)
+        next if !@doc.content.include?(pattern[:anchortext])
 
         links_per_pattern = 0
         @doc.search('p').children.each do |child|
